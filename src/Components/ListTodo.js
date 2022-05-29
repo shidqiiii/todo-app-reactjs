@@ -4,7 +4,7 @@ import { Button } from "react-bootstrap";
 function ListTodo(props) {
   const listItem = props.listTodo.map((element) => {
     return (
-      <li className="list-group-item my-2 d-flex justify-content-between " key={element.key}>
+      <li className="list-group-item my-2 d-flex justify-content-between " key={element.id}>
         {element.text}
         <div className="btn__action">
           <Button className="btn-sm me-2 rounded-3" variant="success">

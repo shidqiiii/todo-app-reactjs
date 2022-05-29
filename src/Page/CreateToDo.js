@@ -7,13 +7,10 @@ class CreateToDo extends Component {
   constructor() {
     super();
     this.state = {
-      listTodo: [
-        { text: "Satu", key: 1 },
-        { text: "Dua", key: 2 },
-      ],
+      listTodo: [],
       currentList: {
         text: "",
-        key: 1,
+        id: 1,
       },
     };
   }
@@ -21,11 +18,11 @@ class CreateToDo extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     this.setState({
+      listTodo: [...this.state.listTodo, this.state.currentList],
       currentList: {
         text: "",
-        key: this.index++,
+        id: this.state.currentList.id + 1,
       },
-      listTodo: [...this.state.listTodo, this.state.currentList],
     });
   };
 
@@ -34,7 +31,7 @@ class CreateToDo extends Component {
     this.setState({
       currentList: {
         text: event.target.value,
-        key: this.index,
+        id: this.state.currentList.id,
       },
     });
   };
@@ -51,7 +48,6 @@ class CreateToDo extends Component {
   render() {
     return (
       <>
-        {/* {console.log(this.state.listTodo)} */}
         <NavigationBar />
         <Container className="my-5 ">
           <Card className="mx-auto" bg="dark" text="white" style={{ maxWidth: "50rem" }}>
@@ -59,7 +55,7 @@ class CreateToDo extends Component {
             <Card.Body className="mx-3">
               <div className="row">
                 <div className="col">
-                  <Form.Control type="text" placeholder="Write your list here..." onChange={this.handleChange} value={this.state.InputTodo} />
+                  <Form.Control type="text" placeholder="Write your list here..." onChange={this.handleChange} value={this.state.currentList.text} />
                 </div>
                 <div className="col-2">
                   <Button variant="light" style={{ width: "100%" }} onClick={this.handleSubmit}>
