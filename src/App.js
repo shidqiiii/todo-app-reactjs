@@ -8,16 +8,6 @@ function App() {
   return (
     <div>
       <Router>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/todo">Create To Do</Link>
-            </li>
-          </ul>
-        </nav>
         <Routes>
           <Route exact path="/" element={<Home />}></Route>
           <Route exact path="/todo" element={<CreateToDo />}></Route>
