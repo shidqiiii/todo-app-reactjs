@@ -7,6 +7,7 @@ class CreateToDo extends Component {
   constructor() {
     super();
     this.state = {
+      onEdit: false,
       listTodo: [],
       currentList: {
         text: "",
@@ -26,6 +27,22 @@ class CreateToDo extends Component {
     });
   };
 
+  handleUpdate = () => {
+    this.state.listTodo.map((item) => {
+      if (item.id) {
+        item.text = this.state.currentList.text;
+      }
+    });
+    this.setState({
+      onEdit: false,
+      listTodo: this.state.listTodo,
+      currentList: {
+        text: "",
+        id: this.state.currentList.id + 1,
+      },
+    });
+  };
+
   handleChange = (event) => {
     event.preventDefault();
     this.setState({
@@ -36,13 +53,21 @@ class CreateToDo extends Component {
     });
   };
 
-  handleEdit = (event) => {
-    event.preventDefault();
-    this.setState({});
+  handleEdit = (text, id) => {
+    console.log(text, id);
+    this.setState({
+      onEdit: true,
+      currentList: {
+        text: text,
+        id: id,
+      },
+    });
   };
 
-  handleDelete = (element) => {
-    console.log(element);
+  handleDelete = (id) => {
+    this.setState({
+      listTodo: this.state.listTodo.filter((element) => element.id !== id),
+    });
   };
 
   render() {
@@ -58,14 +83,14 @@ class CreateToDo extends Component {
                   <Form.Control type="text" placeholder="Write your list here..." onChange={this.handleChange} value={this.state.currentList.text} />
                 </div>
                 <div className="col-2">
-                  <Button variant="light" style={{ width: "100%" }} onClick={this.handleSubmit}>
-                    Add
+                  <Button variant="light" style={{ width: "100%" }} onClick={!this.state.onEdit ? this.handleSubmit : this.handleUpdate}>
+                    {!this.state.onEdit ? "Add" : "Update"}
                   </Button>
                 </div>
               </div>
 
               <div className="list__todo mt-5">
-                <ListTodo listTodo={this.state.listTodo} />
+                <ListTodo listTodo={this.state.listTodo} handleEdit={this.handleEdit} handleDelete={this.handleDelete} />
               </div>
             </Card.Body>
           </Card>

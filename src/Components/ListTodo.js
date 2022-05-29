@@ -7,10 +7,22 @@ function ListTodo(props) {
       <li className="list-group-item my-2 d-flex justify-content-between " key={element.id}>
         {element.text}
         <div className="btn__action">
-          <Button className="btn-sm me-2 rounded-3" variant="success">
+          <Button
+            className="btn-sm me-2 rounded-3"
+            variant="success"
+            onClick={() => {
+              props.handleEdit(element.text, element.id);
+            }}
+          >
             Edit
           </Button>
-          <Button className="btn-sm ms-2 rounded-3" variant="danger">
+          <Button
+            className="btn-sm ms-2 rounded-3"
+            variant="danger"
+            onClick={() => {
+              props.handleDelete(element.id);
+            }}
+          >
             Delete
           </Button>
         </div>
