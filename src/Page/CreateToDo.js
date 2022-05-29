@@ -16,14 +16,7 @@ class CreateToDo extends Component {
     };
   }
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    if (this.state.currentList.text !== "") {
-      this.setState({
-        listTodo: [...this.state.listTodo, this.state.currentList],
-      });
-    }
-
+  handleData = () => {
     this.setState({
       currentList: {
         listTodo: this.state.listTodo,
@@ -33,20 +26,26 @@ class CreateToDo extends Component {
     });
   };
 
+  handleSubmit = (event) => {
+    event.preventDefault();
+    if (this.state.currentList.text !== "") {
+      this.setState({
+        listTodo: [...this.state.listTodo, this.state.currentList],
+      });
+    }
+    this.handleData();
+  };
+
   handleUpdate = () => {
     this.state.listTodo.map((item) => {
       if (item.id === this.state.currentList.id) {
         item.text = this.state.currentList.text;
+        this.setState({
+          onEdit: false,
+        });
       }
     });
-    this.setState({
-      onEdit: false,
-      listTodo: this.state.listTodo,
-      currentList: {
-        text: "",
-        id: this.state.currentList.id + 1,
-      },
-    });
+    this.handleData();
   };
 
   handleChange = (event) => {
