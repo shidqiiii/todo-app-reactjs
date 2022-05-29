@@ -18,8 +18,11 @@ class CreateToDo extends Component {
 
   handleSubmit = (event) => {
     event.preventDefault();
+    if (this.state.currentList.text !== "") {
+      this.state.listTodo = [...this.state.listTodo, this.state.currentList];
+    }
     this.setState({
-      listTodo: [...this.state.listTodo, this.state.currentList],
+      listTodo: this.state.listTodo,
       currentList: {
         text: "",
         id: this.state.currentList.id + 1,
