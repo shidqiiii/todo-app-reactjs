@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
+import ListTodo from "../Components/ListTodo";
 import NavigationBar from "../Components/Navbar";
 
 class CreateToDo extends Component {
@@ -68,23 +69,7 @@ class CreateToDo extends Component {
               </div>
 
               <div className="list__todo mt-5">
-                <ul className="list-group list-group-flush" style={{ width: "100%" }}>
-                  {this.state.listTodo.map((element) => {
-                    return (
-                      <li className="list-group-item my-2 d-flex justify-content-between" key={element.key}>
-                        {element.text}
-                        <div className="btn__action">
-                          <Button className="btn-sm me-2 rounded-3" variant="success">
-                            Edit
-                          </Button>
-                          <Button className="btn-sm ms-2 rounded-3" variant="danger" onClick={this.handleDelete}>
-                            Delete
-                          </Button>
-                        </div>
-                      </li>
-                    );
-                  })}
-                </ul>
+                <ListTodo listTodo={this.state.listTodo} />
               </div>
             </Card.Body>
           </Card>
