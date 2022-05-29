@@ -6,7 +6,7 @@ function NavigationBar() {
   return (
     <Navbar bg="dark" expand="lg" sticky="top" variant="dark">
       <Container>
-        <Navbar.Brand href="#home" className="fw-bold">
+        <Navbar.Brand href="/" className="fw-bold">
           TodoList
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
