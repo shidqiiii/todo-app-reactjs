@@ -19,11 +19,14 @@ class CreateToDo extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
     if (this.state.currentList.text !== "") {
-      this.state.listTodo = [...this.state.listTodo, this.state.currentList];
+      this.setState({
+        listTodo: [...this.state.listTodo, this.state.currentList],
+      });
     }
+
     this.setState({
-      listTodo: this.state.listTodo,
       currentList: {
+        listTodo: this.state.listTodo,
         text: "",
         id: this.state.currentList.id + 1,
       },
@@ -32,7 +35,7 @@ class CreateToDo extends Component {
 
   handleUpdate = () => {
     this.state.listTodo.map((item) => {
-      if (item.id) {
+      if (item.id === this.state.currentList.id) {
         item.text = this.state.currentList.text;
       }
     });
