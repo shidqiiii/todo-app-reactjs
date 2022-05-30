@@ -11,7 +11,7 @@ class CreateToDo extends Component {
       listTodo: [],
       currentList: {
         text: "",
-        id: 1,
+        id: 0,
       },
     };
   }
@@ -21,7 +21,7 @@ class CreateToDo extends Component {
       currentList: {
         listTodo: this.state.listTodo,
         text: "",
-        id: this.state.currentList.id + 1,
+        id: Date.now(),
       },
     });
   };
