@@ -11,7 +11,7 @@ class CreateToDo extends Component {
       listTodo: [],
       currentList: {
         text: "",
-        id: 0,
+        id: Date.now(),
       },
     };
   }
@@ -24,11 +24,13 @@ class CreateToDo extends Component {
         id: Date.now(),
       },
     });
+    console.log(this.state.currentList.id);
   };
 
   handleSubmit = (event) => {
     event.preventDefault();
-    if (this.state.currentList.text !== "") {
+    let result = this.state.currentList.text.replace(/^\s+|\s+$/gm, "");
+    if (result !== "") {
       this.setState({
         listTodo: [...this.state.listTodo, this.state.currentList],
       });
