@@ -18,6 +18,7 @@ class CreateToDo extends Component {
 
   handleData = () => {
     this.setState({
+      onEdit: false,
       currentList: {
         listTodo: this.state.listTodo,
         text: "",
@@ -27,10 +28,14 @@ class CreateToDo extends Component {
     console.log(this.state.currentList.id);
   };
 
+  handleWhitespace = () => {
+    let result = this.state.currentList.text.replace(/^\s+|\s+$/gm, "");
+    return result;
+  };
+
   handleSubmit = (event) => {
     event.preventDefault();
-    let result = this.state.currentList.text.replace(/^\s+|\s+$/gm, "");
-    if (result !== "") {
+    if (this.handleWhitespace() !== "") {
       this.setState({
         listTodo: [...this.state.listTodo, this.state.currentList],
       });
@@ -40,7 +45,7 @@ class CreateToDo extends Component {
 
   handleUpdate = () => {
     this.state.listTodo.map((item) => {
-      if (item.id === this.state.currentList.id) {
+      if (item.id === this.state.currentList.id && this.handleWhitespace() !== "") {
         item.text = this.state.currentList.text;
         this.setState({
           onEdit: false,
