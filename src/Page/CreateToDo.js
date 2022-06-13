@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Button, Card, Container, Form } from "react-bootstrap";
+import FormInput from "../Components/FormInput";
 import ListTodo from "../Components/ListTodo";
 import NavigationBar from "../Components/Navbar";
 
@@ -7,78 +8,61 @@ class CreateToDo extends Component {
   constructor() {
     super();
     this.state = {
-      onEdit: false,
-      listTodo: [],
-      currentList: {
-        text: "",
-        id: Date.now(),
-      },
+      isEdit: false,
+      items: ["Coba 1", "Coba 2", "Coba 3"],
+      input: "",
+      currentIndex: -1,
     };
   }
 
-  handleData = () => {
+  handleChange = (e) => {
+    e.preventDefault();
     this.setState({
-      onEdit: false,
-      currentList: {
-        listTodo: this.state.listTodo,
-        text: "",
-        id: Date.now(),
-      },
+      input: e.target.value,
     });
-    console.log(this.state.currentList.id);
   };
 
-  handleWhitespace = () => {
-    let result = this.state.currentList.text.replace(/^\s+|\s+$/gm, "");
-    return result;
-  };
+  handleSubmit = (e) => {
+    e.preventDefault();
+    let newItem = this.state.items;
+    let checkInput = this.state.input.trim();
 
-  handleSubmit = (event) => {
-    event.preventDefault();
-    if (this.handleWhitespace() !== "") {
-      this.setState({
-        listTodo: [...this.state.listTodo, this.state.currentList],
-      });
+    if (this.state.currentIndex === -1 && checkInput !== "") {
+      newItem = [...this.state.items, checkInput];
+    } else {
+      newItem[this.state.currentIndex] = checkInput;
     }
-    this.handleData();
+
+    this.setState({
+      items: newItem,
+      input: "",
+      currentIndex: -1,
+      isEdit: false,
+    });
   };
 
-  handleUpdate = () => {
-    this.state.listTodo.map((item) => {
-      if (item.id === this.state.currentList.id && this.handleWhitespace() !== "") {
-        item.text = this.state.currentList.text;
-        this.setState({
-          onEdit: false,
-        });
+  handleEdit = (e) => {
+    let editIndex = this.state.items[e.target.value];
+    this.setState({
+      isEdit: true,
+      input: editIndex,
+      currentIndex: e.target.value,
+    });
+  };
+
+  handleDelete = (e) => {
+    let deleteIndex = this.state.items[e.target.value];
+    let newItems = [];
+    this.state.items.filter((element) => {
+      if (deleteIndex !== element) {
+        return newItems.push(element);
+      } else {
+        return newItems;
       }
     });
-    this.handleData();
-  };
 
-  handleChange = (event) => {
-    event.preventDefault();
     this.setState({
-      currentList: {
-        text: event.target.value,
-        id: this.state.currentList.id,
-      },
-    });
-  };
-
-  handleEdit = (text, id) => {
-    console.log(text, id);
-    this.setState({
-      onEdit: true,
-      currentList: {
-        text: text,
-        id: id,
-      },
-    });
-  };
-
-  handleDelete = (id) => {
-    this.setState({
-      listTodo: this.state.listTodo.filter((element) => element.id !== id),
+      items: newItems,
     });
   };
 
@@ -91,18 +75,11 @@ class CreateToDo extends Component {
             <Card.Header className="text-center fw-bolder">To Do List</Card.Header>
             <Card.Body className="mx-3">
               <div className="row">
-                <div className="col">
-                  <Form.Control type="text" placeholder="Write your list here..." onChange={this.handleChange} value={this.state.currentList.text} />
-                </div>
-                <div className="col-2">
-                  <Button variant="light" style={{ width: "100%" }} onClick={!this.state.onEdit ? this.handleSubmit : this.handleUpdate}>
-                    {!this.state.onEdit ? "Add" : "Update"}
-                  </Button>
-                </div>
+                <FormInput items={this.state.items} input={this.state.input} isEdit={this.state.isEdit} handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
               </div>
 
               <div className="list__todo mt-5">
-                <ListTodo listTodo={this.state.listTodo} handleEdit={this.handleEdit} handleDelete={this.handleDelete} />
+                <ListTodo items={this.state.items} handleEdit={this.handleEdit} handleDelete={this.handleDelete} />
               </div>
             </Card.Body>
           </Card>
