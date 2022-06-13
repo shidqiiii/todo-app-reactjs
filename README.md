@@ -5,7 +5,7 @@ Project build for Task Bootcamp Cooderu Week 3 Session 2 and 3.
 
 ## Deploy Application
 
-[ToDoList](https://master--todo-react-arunika.netlify.app/)
+[ToDoList](https://todo-react-arunika.netlify.app/)
 
 
 ## Screenshots
